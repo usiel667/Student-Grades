@@ -75,7 +75,12 @@ for student in student_data:
     print(f"{student[0]}\t{student[1]}\t{student[2]}")
     
     
-    
+# ask if user wants to add another student
+ 
+ 
+# ask if user wants to remove a student
+
+#     
   
     
     # Search for what class a student is taking
@@ -89,3 +94,11 @@ if not found:
         print(f"No class found for student named {search_name}.")    #did it work
 
 
+
+#calculate average grades of each student
+
+#calculate average grades of each class
+
+
+
+#
