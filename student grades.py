@@ -4,6 +4,8 @@ from colorama import Fore, Style, init
 red = Fore.RED
 blue = Fore.BLUE
 green = Fore.GREEN
+magenta = Fore.MAGENTA
+yellow = Fore.YELLOW
 reset = Style.RESET_ALL
 
 count = 0
@@ -69,21 +71,49 @@ student_data = [[name_list[i], class_list[i], grade_list[i]] for i in range(len(
 
 #print combined list
 print("\nStudent Data:")
-#for print_student_data in student data:
-print("Name\tClass\tGrade")
+
+print(magenta + "Name" + "\t" * 2 + "Class\tGrade" + reset)
 for student in student_data:
     print(f"{student[0]}\t{student[1]}\t{student[2]}")
     
     
 # ask if user wants to add another student
+add_another = input("\nDo you want to add another student? (yes/no): ").strip().lower()
+if add_another == 'yes':
+    num_students = int(input("Enter the number of additional students to add: "))
+    for i in range(num_students):
+        print(f"\nstudent {i + 1}:")
+        name = input("input student name:")
+        student_class = input("input sudents class's:")
+        grade = input("input student grade for class:")
+       
+        # appened (name, class, and grade)lists
+        name_list.append(name)
+        class_list.append(student_class)
+        grade_list.append(grade)
+       
+    # combine lists into one list
+    student_data = [[name_list[i], class_list[i], grade_list[i]] for i in range(len(name_list))]
+    
+    # print combined list
+    print("\nUpdated Student Data:")
+    print("Name\tClass\tGrade")
+    for student in student_data:
+        print(f"{student[0]}\t{student[1]}\t{student[2]}")
+
+
  
  
 # ask if user wants to remove a student
 
-#     
+
+#ask if user wants to search far a student
+#  
   
     
-    # Search for what class a student is taking
+# Search for what class a student is taking
+    #Make it so the search is not case sensitive and also if you want to search for just first name or last name
+    
 search_name = input("\nEnter a student name to see their class: ")
 found = False
 for student in student_data:
