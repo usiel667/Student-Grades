@@ -1,3 +1,6 @@
+#Import necessary libraries
+
+from student_data import student_data
 from colorama import Fore, Style, init
 # Initialize colorama
 
@@ -45,6 +48,8 @@ print(list_b)
 name_list =[]
 class_list =[]
 grade_list = []
+student_id_list = []
+#--------------------------------------------->
 
 
 #ask user how many students to be inputed
@@ -58,23 +63,26 @@ for i in range(num_students):
     name = input("input student name:")
     student_class = input("input sudents class's:")
     grade = input("input student grade for class:")
+    student_id = input("input student ID:")
    
    
 #appened (name, class, and grade)lists
     name_list.append(name)
     class_list.append(student_class)
     grade_list.append(grade)
+    student_id_list.append(student_id)
+    #print(f"Student {i + 1} - Name: {name}, Class: {student_class}, Grade: {grade}, ID: {student_id}")
    
 #combine lists into one list
-student_data = [[name_list[i], class_list[i], grade_list[i]] for i in range(len(name_list))]
+student_data = [[name_list[i], student_id_list[i], class_list[i], grade_list[i]] for i in range(len(name_list))]
 
 
 #print combined list
 print("\nStudent Data:")
 
-print(magenta + "Name" + "\t" * 2 + "Class\tGrade" + reset)
+print(magenta + "Name" + "\t" * 2 + "Student ID\tClass\tGrade" + reset)
 for student in student_data:
-    print(f"{student[0]}\t{student[1]}\t{student[2]}")
+    print(f"{student[0]}\t{student[1]}\t\t{student[2]}\t{student[3]}")
     
     
 # ask if user wants to add another student
@@ -113,7 +121,7 @@ if add_another == 'yes':
     
 # Search for what class a student is taking
     #Make it so the search is not case sensitive and also if you want to search for just first name or last name
-    
+
 search_name = input("\nEnter a student name to see their class: ")
 found = False
 for student in student_data:
@@ -121,7 +129,7 @@ for student in student_data:
             print(f"{student[0]} is taking {student[1]}")
             found = True
 if not found:
-        print(f"No class found for student named {search_name}.")    #did it work
+        print(red + f"No class found for student named {search_name}." + reset)    #did it work
 
 
 
