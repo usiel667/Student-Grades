@@ -1,6 +1,6 @@
 #Import necessary libraries
 
-from student_data import student_data
+
 from colorama import Fore, Style, init
 # Initialize colorama
 
@@ -22,6 +22,28 @@ class_list =[]
 grade_list = []
 student_id_list = []
 #--------------------------------------------->
+
+#Open student_data.txt file to read and write data
+with open("student_data.txt", "r") as file:
+  content = file.read()
+  
+
+#--------------------------------------------->
+
+#ask if user wants to display existing student data or add new students
+display_existing = input("Do you want to display existing student data? (yes/no): ").strip().lower()
+if display_existing == 'yes':
+    if content:
+        print("\nExisting Student Data:")
+        # Display student data in columns
+        print(magenta + "Name:" + "\t" * 2 + "Student ID:\tClass:" + "\t" * 2 + "Grade:" + reset)
+        for line in content.strip().splitlines():
+            fields = line.split(",")
+            # Ensure there are 4 fields before printing
+            if len(fields) == 4:
+                print(f"{fields[0]}\t{fields[1]}\t\t{fields[2]}\t\t{fields[3]}")
+    else:
+        print(red + "No existing student data found." + reset)
 
 
 #ask user how many students to be inputed
