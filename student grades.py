@@ -18,9 +18,10 @@ count = 0
 
    
 name_list =[]
+student_id_list = []
 class_list =[]
 grade_list = []
-student_id_list = []
+
 #--------------------------------------------->
 
 #Open student_data.txt file to read and write data
