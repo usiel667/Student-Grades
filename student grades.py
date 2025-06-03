@@ -16,34 +16,6 @@ count = 0
 
 #lists_--------------------------------------->
 
-list_types = ['appened',
-            'clear',
-            'copy',
-            'count',
-            'extend',
-            'extend',
-            'index',
-            'insert',
-            'pop',
-            'remove',
-            'reverse',
-            'sort']
-
-
-catagories = ["NAME", "CLASS", "GRADE"]
-
-
-list_b = [["Allen", "english", 67.5],
-          ["karren", "math", 79.9],
-          ["Travis", "physics", 95.5],
-          ["travers", "science", 87.5],
-          ["Arken", "physics", 76]
-          ]
-       
-       
-
-   
-print(list_b)   
    
 name_list =[]
 class_list =[]
@@ -61,16 +33,18 @@ num_students = int(input("Enter the number of students to add: "))
 for i in range(num_students):
     print(f"\nstudent {i + 1}:")
     name = input("input student name:")
+    student_id = input("input student ID:")
     student_class = input("input sudents class's:")
     grade = input("input student grade for class:")
-    student_id = input("input student ID:")
+   
    
    
 #appened (name, class, and grade)lists
     name_list.append(name)
+    student_id_list.append(student_id)
     class_list.append(student_class)
     grade_list.append(grade)
-    student_id_list.append(student_id)
+    
     #print(f"Student {i + 1} - Name: {name}, Class: {student_class}, Grade: {grade}, ID: {student_id}")
    
 #combine lists into one list
@@ -80,9 +54,9 @@ student_data = [[name_list[i], student_id_list[i], class_list[i], grade_list[i]]
 #print combined list
 print("\nStudent Data:")
 
-print(magenta + "Name" + "\t" * 2 + "Student ID\tClass\tGrade" + reset)
+print(magenta + "Name:" + "\t" * 2 + "Student ID:\tClass:", "\t" *2 + "Grade:" + reset)
 for student in student_data:
-    print(f"{student[0]}\t{student[1]}\t\t{student[2]}\t{student[3]}")
+    print(f"{student[0]}\t{student[1]}\t\t{student[2]}\t\t{student[3]}")
     
     
 # ask if user wants to add another student

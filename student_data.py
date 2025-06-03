@@ -8,3 +8,26 @@ student_data = [
     ["Arken", "physics", 76]
 ]
 
+
+
+list_types = ['appened',
+            'clear',
+            'copy',
+            'count',
+            'extend',
+            'extend',
+            'index',
+            'insert',
+            'pop',
+            'remove',
+            'reverse',
+            'sort']
+
+list_b = [["Allen", "english", 67.5],
+          ["karren", "math", 79.9],
+          ["Travis", "physics", 95.5],
+          ["travers", "science", 87.5],
+          ["Arken", "physics", 76]
+          ]
+       
+       
