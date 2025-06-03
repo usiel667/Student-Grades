@@ -123,3 +123,59 @@ for print_list_values in list_types:
     for print_list_values in list_types:
         print("")
         break
+
+def input_student_data():
+    """
+    Function to input student data and return a combined list of student information.
+    """
+    # Initialize lists for storing student data
+    name_list = []
+    class_list = []
+    grade_list = []
+    student_id_list = []
+
+    # Ask user how many students to input
+    num_students = int(input("Enter the number of students to add: "))
+
+    # Collect data for each student
+    for i in range(num_students):
+        print(f"\nStudent {i + 1}:")
+        name = input("Input student name: ")
+        student_class = input("Input student's class: ")
+        grade = input("Input student grade for class: ")
+        student_id = input("Input student ID: ")
+
+        # Append details to respective lists
+        name_list.append(name)
+        class_list.append(student_class)
+        grade_list.append(grade)
+        student_id_list.append(student_id)
+
+    # Combine lists into one list of student data
+    student_data = [
+        [name_list[i], student_id_list[i], class_list[i], grade_list[i]]
+        for i in range(len(name_list))
+    ]
+
+    return student_data
+
+#created a reusable funtion for input
+def display_student_data(student_data):
+    """
+    Function to display student data in a formatted table.
+    """
+    from colorama import Fore, Style
+
+    magenta = Fore.MAGENTA
+    reset = Style.RESET_ALL
+
+    print("\nStudent Data:")
+    print(magenta + "Name" + "\t" * 2 + "Student ID\tClass\tGrade" + reset)
+    for student in student_data:
+        print(f"{student[0]}\t{student[1]}\t\t{student[2]}\t{student[3]}")
+
+
+# Example usage
+if __name__ == "__main__":
+    student_data = input_student_data()
+    display_student_data(student_data)
