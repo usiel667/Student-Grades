@@ -37,20 +37,26 @@ if display_existing == 'yes':
     if content:
         print("\nExisting Student Data:")
         # Display student data in columns
-        print(magenta + "Name:" + "\t" * 2 + "Student ID:\tClass:" + "\t" * 2 + "Grade:" + reset)
+        print(magenta + f"{'Name:':20} {'Student ID:':10} {'Class:':10} {'Grade:':5}" + reset)
         for line in content.strip().splitlines():
             fields = line.split(",")
             # Ensure there are 4 fields before printing
             if len(fields) == 4:
-                print(f"{fields[0]}\t{fields[1]}\t\t{fields[2]}\t\t{fields[3]}")
+                print(f"{fields[0]:20}{fields[1]:10}{fields[2]:10}{fields[3]:5}")
     else:
         print(red + "No existing student data found." + reset)
 
 
 #ask user how many students to be inputed
 
-num_students = int(input("Enter the number of students to add: "))
-
+while True:
+    num_students_input = input("Enter the number of students to add: ").stryeip()
+    if num_students_input.isdigit():
+        num_students = int(num_students_input)
+        break
+    else:
+        print(red + "Please enter a valid number." + reset)
+    
 #collect data for each student(name, class, grade)
 
 for i in range(num_students):
@@ -89,22 +95,25 @@ if add_another == 'yes':
     for i in range(num_students):
         print(f"\nstudent {i + 1}:")
         name = input("input student name:")
+        student_id = input("input student ID:")
         student_class = input("input sudents class's:")
         grade = input("input student grade for class:")
        
         # appened (name, class, and grade)lists
         name_list.append(name)
+        student_id_list.append(student_id)
         class_list.append(student_class)
         grade_list.append(grade)
        
     # combine lists into one list
-    student_data = [[name_list[i], class_list[i], grade_list[i]] for i in range(len(name_list))]
+    student_data = [[name_list[i], student_id_list[i], class_list[i], grade_list[i]] for i in range(len(name_list))]
     
     # print combined list
     print("\nUpdated Student Data:")
-    print("Name\tClass\tGrade")
+    print("Name\tStudent ID\tClass\tGrade")
     for student in student_data:
-        print(f"{student[0]}\t{student[1]}\t{student[2]}")
+        print(f"{student[0]}\t{student[1]}\t{student[2]}\t{student[3]}")
+        
 
 
  
@@ -123,7 +132,7 @@ search_name = input("\nEnter a student name to see their class: ")
 found = False
 for student in student_data:
     if student[0].lower() == search_name.lower():
-            print(f"{student[0]} is taking {student[1]}")
+            print(f"{student[0]} is taking {student[2]}" + " with a grade of " + student[3] + ".")
             found = True
 if not found:
         print(red + f"No class found for student named {search_name}." + reset)    #did it work
