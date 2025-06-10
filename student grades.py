@@ -37,12 +37,12 @@ if display_existing == 'yes':
     if content:
         print("\nExisting Student Data:")
         # Display student data in columns
-        print(magenta + f"{'Name:':20} {'Student ID:':10} {'Class:':10} {'Grade:':5}" + reset)
+        print(magenta + f"{'Name:':20}{'Student ID:':14}{'Class:':10}{'Grade:':5}" + reset)
         for line in content.strip().splitlines():
             fields = line.split(",")
             # Ensure there are 4 fields before printing
             if len(fields) == 4:
-                print(f"{fields[0]:20}{fields[1]:10}{fields[2]:10}{fields[3]:5}")
+                print(f"{fields[0]:20}{fields[1]:14}{fields[2]:10}{fields[3]:5}")
     else:
         print(red + "No existing student data found." + reset)
 
