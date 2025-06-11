@@ -31,9 +31,10 @@ with open("student_data.txt", "r") as file:
 
 #--------------------------------------------->
 
-#ask if user wants to display existing student data or add new students
+#ask if user wants to display existing student data(add feature to take y or n input)
+# or add new students
 display_existing = input("Do you want to display existing student data? (yes/no): ").strip().lower()
-if display_existing == 'yes':
+if display_existing in ['yes', 'y']:
     if content:
         print("\nExisting Student Data:")
         # Display student data in columns
@@ -50,7 +51,7 @@ if display_existing == 'yes':
 #ask user how many students to be inputed
 
 while True:
-    num_students_input = input("Enter the number of students to add: ").stryeip()
+    num_students_input = input("Enter the number of students to add: ").strip()
     if num_students_input.isdigit():
         num_students = int(num_students_input)
         break
@@ -114,9 +115,13 @@ if add_another == 'yes':
     for student in student_data:
         print(f"{student[0]}\t{student[1]}\t{student[2]}\t{student[3]}")
         
-
-
+        # After collecting new student data and updating the lists, append the new students to student_data.txt
+with open("student_data.txt", "a") as file:
+    # Only write the newly added students (the last num_students in the lists)
+    for i in range(len(name_list) - num_students, len(name_list)):
+        file.write(f"{name_list[i]},{student_id_list[i]},{class_list[i]},{grade_list[i]}\n")
  
+
  
 # ask if user wants to remove a student
 

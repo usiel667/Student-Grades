@@ -33,3 +33,5 @@ Harper Mitchell,100027,english,90.5
 Evelyn Roberts,100028,science,85.2
 Scarlett Turner,100029,history,88.3
 Madison Phillips,100030,physics,93.8
+Tom Evans,353896,Physics,98.8
+Lex Freedman,554876,Comp Sci,99
