@@ -133,16 +133,15 @@ with open("student_data.txt", "a") as file:
 # Search for what class a student is taking
     #Make it so the search is not case sensitive and also if you want to search for just first name or last name
 
-search_name = input("\nEnter a student name to see their class: ")
+search_name = input("Enter a student name to see their class: ").strip().lower()
 found = False
-for student in student_data:
-    if student[0].lower() == search_name.lower():
-            print(f"{student[0]} is taking {student[2]}" + " with a grade of " + student[3] + ".")
-            found = True
+for line in content.strip().splitlines():
+    fields = line.split(",")
+    if len(fields) >= 3 and fields[0].strip().lower() == search_name:
+        print(f"{fields[0]} is taking {fields[2]}")
+        found = True
 if not found:
-        print(red + f"No class found for student named {search_name}." + reset)    #did it work
-
-
+    print(red + f"No class found for student named {search_name}." + reset)
 
 #calculate average grades of each student
 
