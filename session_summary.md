@@ -434,6 +434,54 @@ return {
     -- Set nvim-notify as the default notification handler
     vim.notify = notify
     
+    -- Spotify integration functions
+    local function get_spotify_info()
+      -- PowerShell command to get Spotify window title
+      local spotify_cmd = [[powershell.exe -Command "Get-Process | Where-Object { $_.ProcessName -eq 'Spotify' -and $_.MainWindowTitle -ne '' } | Select-Object -ExpandProperty MainWindowTitle | Select-Object -First 1"]]
+      
+      local handle = io.popen(spotify_cmd)
+      if not handle then
+        return nil
+      end
+      
+      local result = handle:read('*a')
+      handle:close()
+      
+      if result and result:match('%S') then
+        -- Clean up the result and check if it's not just "Spotify"
+        local title = result:gsub('^%s*(.-)%s*$', '%1') -- trim whitespace
+        if title and title ~= "" and title ~= "Spotify" and not title:match("^Spotify$") then
+          return title
+        end
+      end
+      
+      return nil
+    end
+    
+    local function show_spotify_notification()
+      local song_info = get_spotify_info()
+      if song_info then
+        -- Parse artist and song if format is "Artist - Song"
+        local artist, song = song_info:match("^(.+)%s*-%s*(.+)$")
+        if artist and song then
+          notify(string.format("🎵 %s\n🎤 %s", song, artist), 'info', {
+            title = '🎧 Now Playing',
+            timeout = 4000,
+          })
+        else
+          notify(string.format("🎵 %s", song_info), 'info', {
+            title = '🎧 Now Playing',
+            timeout = 4000,
+          })
+        end
+      else
+        notify('Spotify not playing or not found', 'warn', {
+          title = '🎧 Spotify',
+          timeout = 2000,
+        })
+      end
+    end
+    
     -- Create autocmd groups to prevent conflicts
     local notify_group = vim.api.nvim_create_augroup('NotifyCustom', { clear = true })
     
@@ -482,12 +530,76 @@ return {
       notify.dismiss({ silent = true, pending = true })
     end, { desc = 'Dismiss all notifications' })
     
+    vim.keymap.set('n', '<leader>nh', function()
+      -- Try to open notification history, fallback to simple message
+      local ok, telescope = pcall(require, 'telescope')
+      if ok and telescope.extensions.notify then
+        telescope.extensions.notify.notify()
+      else
+        notify('Notification history not available', 'warn', {
+          title = 'Info',
+          timeout = 2000,
+        })
+      end
+    end, { desc = 'Show notification history' })
+    
     vim.keymap.set('n', '<leader>nt', function()
       notify('This is a test notification!', 'info', {
         title = 'Test',
         timeout = 2000,
       })
     end, { desc = 'Test notification' })
+    
+    vim.keymap.set('n', '<leader>nw', function()
+      notify('Reloading workspace...', 'info', {
+        title = 'Workspace',
+        timeout = 2000,
+      })
+      -- Trigger LSP restart
+      vim.cmd('LspRestart')
+    end, { desc = 'Reload workspace' })
+    
+    -- Spotify keybindings
+    vim.keymap.set('n', '<leader>ns', show_spotify_notification, { desc = 'Show current Spotify song' })
+    
+    vim.keymap.set('n', '<leader>nS', function()
+      local song_info = get_spotify_info()
+      if song_info then
+        -- Show persistent notification and auto-update every 30 seconds
+        show_spotify_notification()
+        
+        -- Create a timer for auto-updates (optional)
+        local timer = vim.loop.new_timer()
+        local update_count = 0
+        local max_updates = 10 -- Stop after 10 updates (5 minutes)
+        
+        timer:start(30000, 30000, vim.schedule_wrap(function()
+          update_count = update_count + 1
+          if update_count >= max_updates then
+            timer:stop()
+            timer:close()
+            notify('Spotify auto-updates stopped', 'info', {
+              title = '🎧 Auto-Update',
+              timeout = 2000,
+            })
+            return
+          end
+          
+          local current_song = get_spotify_info()
+          if current_song and current_song ~= song_info then
+            show_spotify_notification()
+            song_info = current_song -- Update the reference
+          end
+        end))
+        
+        notify('Auto-updating Spotify notifications for 5 minutes', 'info', {
+          title = '🎧 Auto-Update Started',
+          timeout = 3000,
+        })
+      else
+        show_spotify_notification() -- Will show "not playing" message
+      end
+    end, { desc = 'Auto-update Spotify notifications' })
   end,
 }
 ```
